@@ -1,0 +1,27 @@
+# Node.js dependencies
+node_modules/
+npm-debug.log
+yarn-error.log
+.env
+.env.*.local
+
+# Logs
+logs
+*.log
+logs/*.log
+
+# Build files
+/dist
+/build
+/public/static
+
+# Coverage
+coverage/
+*.lcov
+
+# React specific
+.DS_Store
+/build
+node_modules
+npm-debug.log*
+y

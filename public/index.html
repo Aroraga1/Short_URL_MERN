@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Awesome URL Shortener</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        transition: all 0.3s ease; /* Smooth transition for all elements */
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        background-color: #121212; /* Dark background */
+        color: #f5f5f5; /* Light text color */
+      }
+
+      header {
+        background-color: #d32f2f; /* Red header */
+        color: white;
+        padding: 20px 0;
+        text-align: center;
+        position: relative;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+      }
+
+      nav {
+        margin-top: 10px;
+      }
+
+      nav a {
+        color: white;
+        margin: 0 15px;
+        text-decoration: none;
+        font-weight: 600;
+        position: relative;
+      }
+
+      nav a::after {
+        content: "";
+        display: block;
+        height: 2px;
+        width: 0;
+        background: white;
+        transition: width 0.3s;
+      }
+
+      nav a:hover::after {
+        width: 100%; /* Animation effect */
+      }
+
+      section {
+        padding: 50px 20px;
+        max-width: 800px;
+        margin: auto;
+        text-align: center;
+        background: #1e1e1e; /* Dark section background */
+        border-radius: 15px;
+        box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.5);
+        margin-bottom: 30px;
+        opacity: 0; /* Initial opacity for animation */
+        transform: translateY(20px); /* Initial position for animation */
+        animation: fadeInUp 0.5s forwards; /* Fade in animation */
+      }
+
+      h2 {
+        margin-bottom: 20px;
+        font-weight: 600;
+      }
+
+      p {
+        line-height: 1.6;
+        margin-bottom: 20px;
+      }
+
+      .input-box {
+        width: 100%;
+        padding: 15px;
+        margin: 10px 0;
+        border: 2px solid #ddd;
+        border-radius: 8px;
+        font-size: 16px;
+        transition: border-color 0.3s;
+      }
+
+      .input-box:focus {
+        border-color: #d32f2f; /* Red border on focus */
+        outline: none;
+      }
+
+      .submit-btn {
+        background-color: #d32f2f; /* Red button */
+        color: white;
+        padding: 12px 25px;
+        border: none;
+        border-radius: 8px;
+        font-size: 18px;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.2s;
+      }
+
+      .submit-btn:hover {
+        background-color: #c62828; /* Darker red on hover */
+        transform: scale(1.05); /* Scale effect on hover */
+      }
+
+      .footer {
+        text-align: center;
+        padding: 20px 0;
+        background-color: #1e1e1e; /* Dark footer */
+        position: relative;
+        bottom: 0;
+        width: 100%;
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.5);
+      }
+
+      .success-message {
+        margin-top: 10px;
+        color: #4caf50; /* Green success message */
+        font-weight: bold;
+        display: none; /* Hidden by default */
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes shake {
+        0%,
+        100% {
+          transform: translateX(0);
+        }
+        25% {
+          transform: translateX(-5px);
+        }
+        50% {
+          transform: translateX(5px);
+        }
+        75% {
+          transform: translateX(-5px);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Awesome URL Shortener</h1>
+      <nav>
+        <a href="#about">About</a>
+        <a href="#how-it-works">How It Works</a>
+        <a href="#shorten-url">Shorten URL</a>
+      </nav>
+    </header>
+
+    <section id="shorten-url">
+      <h2>Shorten Your URL</h2>
+      <form id="inputForm">
+        <input
+          type="text"
+          id="string1"
+          class="input-box"
+          placeholder="Enter your long URL"
+          required
+        />
+        <input
+          type="text"
+          id="string2"
+          class="input-box"
+          placeholder="Enter your username or identifier"
+          required
+        />
+        <button type="submit" class="submit-btn">Generate and Show</button>
+        <p class="success-message" id="successMessage">
+          URL saved successfully!
+        </p>
+      </form>
+    </section>
+
+    <section id="about">
+      <h2>About Our Service</h2>
+      <p>
+        Our URL shortener allows you to create short, easy-to-share links that
+        redirect to your longer URLs. Whether you want to share content on
+        social media, send links through email, or keep track of your links, our
+        service makes it simple and efficient.
+      </p>
+    </section>
+
+    <section id="how-it-works">
+      <h2>How It Works</h2>
+      <p>
+        1. Enter the long URL you want to shorten in the provided form.<br />
+        2. Click the "Generate and Show" button to create your short link.<br />
+        3. Copy the generated short link and share it wherever you want!<br />
+      </p>
+    </section>
+
+    <footer class="footer">
+      <p>&copy; 2024 Awesome URL Shortener. All rights reserved.</p>
+    </footer>
+    <script src="script.js"></script>
+  </body>
+</html>
