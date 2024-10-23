@@ -22,23 +22,28 @@ document
         username: string2,
       }),
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
       .then((data) => {
         console.log("Success:", data);
-        alert("URL saved successfully!");
+        alert(data.message); // Show the success message from the response
+
+        // Display the generated short URL in the output box
+        const outputText = document.getElementById("outputText");
+        outputText.value = concatenatedString; // Use the concatenated string for output
+
+        // Make the output section visible
+        document.getElementById("outputSection").style.display = "block";
+        document.getElementById("copyBtn").style.display = "inline-block"; // Show the copy button
       })
       .catch((error) => {
         console.error("Error:", error);
         alert("Error saving URL.");
       });
-
-    // Display the concatenated string in the output box
-    const outputText = document.getElementById("outputText");
-    outputText.value = concatenatedString;
-
-    // Make the output section visible
-    document.getElementById("outputSection").style.display = "block";
-    document.getElementById("copyBtn").style.display = "inline-block"; // Show the copy button
   });
 
 // Copy to Clipboard Function

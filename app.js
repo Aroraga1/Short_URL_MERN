@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const path = require("path");
 const mongoose = require("mongoose");
+require("dotenv").config();
 
 // Middleware
 app.use(express.json());
@@ -9,7 +10,7 @@ app.use(express.static("public")); // Serve static files from the public directo
 
 // MongoDB connection
 mongoose
-  .connect("mongodb://127.0.0.1:27017/URL-shortner", {
+  .connect(process.env.MONGOURL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
@@ -39,6 +40,7 @@ const urlsSchema = new mongoose.Schema({
 const URLS = mongoose.model("URLS", urlsSchema);
 
 // Route to handle URL shortening
+// Route to handle URL shortening
 app.post("/", async (req, res) => {
   const { url, mainURL, username } = req.body;
 
@@ -63,9 +65,13 @@ app.post("/", async (req, res) => {
     });
 
     await saveData.save();
-    res
-      .status(201)
-      .send({ message: "URL saved successfully!", data: saveData });
+
+    // Respond with the saved data including the shortURL
+    res.status(201).send({
+      message: "URL saved successfully!",
+      data: saveData,
+      shortURL: saveData.shortURL, // Include the short URL in the response
+    });
   } catch (error) {
     console.error("Error saving data:", error);
     res.status(500).send("Error saving URL.");
