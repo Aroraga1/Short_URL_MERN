@@ -9,7 +9,7 @@ document
     const string2 = document.getElementById("string2").value;
 
     // Concatenate the strings to create the short URL
-    const concatenatedString = `http://localhost:3000/${string2}`; // No need for String() here
+    const concatenatedString = `https://shortit-lemon.vercel.app/${string2}`; // No need for String() here
 
     fetch("/", {
       method: "POST",

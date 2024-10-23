@@ -40,12 +40,14 @@ const urlsSchema = new mongoose.Schema({
 const URLS = mongoose.model("URLS", urlsSchema);
 
 // Route to handle URL shortening
-// Route to handle URL shortening
 app.post("/", async (req, res) => {
+  console.log("Received request to shorten URL:", req.body);
+
   const { url, mainURL, username } = req.body;
 
   // Validate incoming data
   if (!url || !mainURL || !username) {
+    console.warn("Validation failed: Missing required fields");
     return res.status(400).send("Missing required fields");
   }
 
@@ -54,6 +56,7 @@ app.post("/", async (req, res) => {
     const existingEntry = await URLS.findOne({ mainUrl: url, username });
 
     if (existingEntry) {
+      console.warn(`Entry already exists: ${username} for ${url}`);
       return res.status(400).send("This username already exists for this URL.");
     }
 
@@ -65,6 +68,7 @@ app.post("/", async (req, res) => {
     });
 
     await saveData.save();
+    console.log("URL saved successfully:", saveData);
 
     // Respond with the saved data including the shortURL
     res.status(201).send({
@@ -80,22 +84,33 @@ app.post("/", async (req, res) => {
 
 // Serve the main HTML file
 app.get("/", (req, res) => {
+  console.log("Serving index.html");
   res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
 // Redirect from short URL to the main URL
 app.get("/:shortURL", async (req, res) => {
   const { shortURL } = req.params; // Extract the shortURL from params
-  const urlData = await URLS.findOne({ shortURL });
-  if (urlData) {
-    // Check if urlData is found
-    res.redirect(urlData.mainUrl);
-  } else {
-    res.status(404).send("Short URL not found.");
+  console.log(`Redirect request for shortURL: ${shortURL}`);
+
+  try {
+    const urlData = await URLS.findOne({ shortURL });
+    
+    if (urlData) {
+      console.log(`Redirecting to main URL: ${urlData.mainUrl}`);
+      return res.redirect(urlData.mainUrl);
+    } else {
+      console.warn("Short URL not found:", shortURL);
+      return res.status(404).send("Short URL not found.");
+    }
+  } catch (error) {
+    console.error("Error finding short URL:", error);
+    return res.status(500).send("Internal server error");
   }
 });
 
 // Start the server
-app.listen(3000, () => {
-  console.log("Server running at http://localhost:3000");
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server running at http://localhost:${PORT}`);
 });
