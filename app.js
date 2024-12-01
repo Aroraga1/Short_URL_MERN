@@ -9,11 +9,12 @@ app.use(express.json());
 app.use(express.static("public")); // Serve static files from the public directory
 
 // MongoDB connection
-mongoose
-  .connect(process.env.MONGOURL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+mongoose.connect(process.env.MONGOURL, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  connectTimeoutMS: 30000,  // Increase timeout duration (default is 10000 ms)
+  socketTimeoutMS: 30000,   // Increase socket timeout (default is 0, meaning it doesn't time out)
+})
   .then(() => {
     console.log("MongoDB connected");
   })
